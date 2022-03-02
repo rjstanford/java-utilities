@@ -7,6 +7,7 @@ import java.util.Optional;
 /**
  *  Reliably and efficiently convert a number into a rapidly changing, bidirectional string representation
  *  The strings use base 34, which is case insensitive and where i/1 and 0/o are the same
+ *  Furthermore, output strings are mapped 0 -> Y and 1 -> Z to reduce confusion
  */
 public class KeyUtil {
 
@@ -23,10 +24,15 @@ public class KeyUtil {
         if (input == null) {
             return null;
         }
+        input = normalizeBase34(input);
         if (input.length() != 4) {
             throw new IllegalArgumentException("Only 4 character keys can become Shorts");
         }
-        return toBigInteger(input, 5).subtract(BigInteger.valueOf(Short.MAX_VALUE)).shortValueExact();
+        try {
+            return toBigInteger(input, 5).subtract(BigInteger.valueOf(Short.MAX_VALUE)).shortValueExact();
+        } catch (ArithmeticException e) {
+            throw new IllegalArgumentException("Invalid Key");
+        }
     }
 
     public static String toString(Integer input) {
@@ -42,13 +48,18 @@ public class KeyUtil {
         if (input == null) {
             return null;
         }
+        input = normalizeBase34(input);
         if (input.length() != 7) {
             throw new IllegalArgumentException("Only 7 character keys can become Integers");
         }
         var offset = toBigInteger(input, 10);
         var max = BigInteger.valueOf(Integer.MAX_VALUE);
         var value = offset.subtract(max);
-        return value.intValueExact();
+        try {
+            return value.intValueExact();
+        } catch (ArithmeticException e) {
+            throw new IllegalArgumentException("Invalid Key");
+        }
     }
 
     public static String toString(Long input) {
@@ -64,10 +75,16 @@ public class KeyUtil {
         if (input == null) {
             return null;
         }
+        input = normalizeBase34(input);
         if (input.length() != 13) {
             throw new IllegalArgumentException("Only 13 character keys can become Longs");
         }
-        return toBigInteger(input, 20).subtract(BigInteger.valueOf(Long.MAX_VALUE)).longValueExact();
+        try {
+            return toBigInteger(input, 20).subtract(BigInteger.valueOf(Long.MAX_VALUE)).longValueExact();
+        } catch (ArithmeticException e) {
+            throw new IllegalArgumentException("Invalid Key");
+        }
+
     }
 
     private static BigInteger toBigInteger(String base34, int numberLength) {
@@ -110,7 +127,7 @@ public class KeyUtil {
     }
 
     private static BigInteger fromBase34(String in) {
-        return new BigInteger(normalizeBase34(in), 34);
+        return new BigInteger(in, 34);
     }
 
     private static String normalizeBase34(String in) {

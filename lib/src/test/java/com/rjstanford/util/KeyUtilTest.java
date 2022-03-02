@@ -30,4 +30,13 @@ public class KeyUtilTest {
         assertEquals(123, (short) KeyUtil.toShort("Y8GV"));
     }
 
+    @Test public void testCleanup() {
+        assertEquals(123, (int) KeyUtil.toInteger("YHZ2Q6Y"));
+        assertEquals(123, (int) KeyUtil.toInteger("YH-Z2-Q6-Y"));
+        assertEquals(123, (int) KeyUtil.toInteger("yh-Z2-Q6-Y"));
+        assertEquals(1, (long) KeyUtil.toLong("XUY38TKDFDOI6"));
+        assertEquals(1, (long) KeyUtil.toLong("XUY38TKDFD016"));
+    }
+
+
 }
