@@ -14,7 +14,7 @@ on:
 
 jobs:
 
-  tag:
+  Publish:
 
     runs-on: ubuntu-latest
     permissions:
@@ -23,6 +23,7 @@ jobs:
 
     steps:
 
+    - run: echo Event is ${{ github.event }}
     - run: echo PR Target is ${{ github.event.pull_request_target }}
     - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
 
@@ -42,10 +43,10 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build with Gradle
+    - name: Test
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        arguments: build -Pversion=${{ steps.tag_version.outputs.new_tag }}
+        arguments: test
 
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1
@@ -57,7 +58,7 @@ jobs:
     - name: Publish to GitHub Packages
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        arguments: publish
+        arguments: publish -Pversion=${{ steps.tag_version.outputs.new_tag }}
       env:
         USERNAME: ${{ github.actor }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
