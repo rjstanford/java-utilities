@@ -1,20 +1,17 @@
-# This workflow uses actions that are not certified by GitHub.
-# They are provided by a third-party and are governed by
-# separate terms of service, privacy policy, and support
-# documentation.
-# This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
-# For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
+# Every time a PR is merged into HEAD, release a new library using semantic versioning
 
 name: Pull Request Merge
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - closed
 
 jobs:
 
   Publish:
+
+    if: github.event.pull_request.merged == 'true'
 
     runs-on: ubuntu-latest
     permissions:
@@ -41,7 +38,6 @@ jobs:
       id: tag_version
       uses: mathieudutour/github-tag-action@v6.0
       with:
-        tag_prefix: ''
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Test
@@ -52,14 +48,14 @@ jobs:
     - name: Create a GitHub release
       uses: ncipollo/release-action@v1
       with:
-        tag: v${{ steps.tag_version.outputs.new_tag }}
-        name: Release v${{ steps.tag_version.outputs.new_tag }}
+        tag: ${{ steps.tag_version.outputs.new_tag }}
+        name: Release ${{ steps.tag_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
 
     - name: Publish to GitHub Packages
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        arguments: publish -Pversion=${{ steps.tag_version.outputs.new_tag }}
+        arguments: publish -Pversion=${{ steps.tag_version.outputs.new_version }}
       env:
         USERNAME: ${{ github.actor }}
         TOKEN: ${{ secrets.GITHUB_TOKEN }}
