@@ -23,7 +23,8 @@ jobs:
 
     steps:
 
-    - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
+      - run: echo PR Target is ${{ github.event.pull_request_target }}
+      - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
 
     - uses: actions/checkout@v3
 
@@ -36,7 +37,7 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: Create Tag
-      id: create-tag
+      id: tag_version
       uses: mathieudutour/github-tag-action@v6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
