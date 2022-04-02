@@ -23,8 +23,8 @@ jobs:
 
     steps:
 
-      - run: echo PR Target is ${{ github.event.pull_request_target }}
-      - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
+    - run: echo PR Target is ${{ github.event.pull_request_target }}
+    - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
 
     - uses: actions/checkout@v3
 
