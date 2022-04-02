@@ -16,14 +16,14 @@ jobs:
 
   tag:
 
-    # if: github.event.pull_request_target.merged == true
-
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
+
+    - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
 
     - uses: actions/checkout@v3
 
