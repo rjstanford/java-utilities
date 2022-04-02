@@ -22,6 +22,7 @@ publishing {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/rjstanford/java-utilities")
+
             credentials {
                 username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
                 password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
@@ -30,6 +31,7 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
+            jar.baseName = 'utilities';
             from(components.java)
         }
     }
