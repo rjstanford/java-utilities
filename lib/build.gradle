@@ -18,6 +18,7 @@ repositories {
 }
 
 publishing {
+
     repositories {
         maven {
             name = "GitHubPackages"
@@ -31,7 +32,8 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
-            jar.baseName = 'utilities';
+            groupId = 'rjstanford'
+            artifactId = 'utilities';
             from(components.java)
         }
     }
