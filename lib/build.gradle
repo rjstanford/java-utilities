@@ -8,13 +8,31 @@
  */
 
 plugins {
-    // Apply the java-library plugin for API and implementation separation.
     id 'java-library'
+    id 'maven-publish'
 }
 
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/rjstanford/java-utilities")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
 }
 
 dependencies {
