@@ -11,11 +11,16 @@ import java.util.Optional;
  */
 public class KeyUtil {
 
+    /**
+     * Convert a
+     * @param input
+     * @return
+     */
     public static String toString(Short input) {
         if (input == null) {
             return null;
         }
-        var offset = BigInteger.valueOf(input).add(BigInteger.valueOf(Short.MAX_VALUE));
+        var offset = BigInteger.valueOf(input).subtract(BigInteger.valueOf(Short.MIN_VALUE));
         // This gives us a maximum value of 2^16 which is smaller than 4^34
         return toString(offset, 5, 4);
     }
@@ -29,7 +34,7 @@ public class KeyUtil {
             throw new IllegalArgumentException("Only 4 character keys can become Shorts");
         }
         try {
-            return toBigInteger(input, 5).subtract(BigInteger.valueOf(Short.MAX_VALUE)).shortValueExact();
+            return toBigInteger(input, 5).add(BigInteger.valueOf(Short.MIN_VALUE)).shortValueExact();
         } catch (ArithmeticException e) {
             throw new IllegalArgumentException("Invalid Key");
         }
@@ -39,7 +44,7 @@ public class KeyUtil {
         if (input == null) {
             return null;
         }
-        var offset = BigInteger.valueOf(input).add(BigInteger.valueOf(Integer.MAX_VALUE));
+        var offset = BigInteger.valueOf(input).subtract(BigInteger.valueOf(Integer.MIN_VALUE));
         // This gives us a maximum value of 2^32 which is smaller than 7^34
         return toString(offset, 10, 7);
     }
@@ -53,8 +58,8 @@ public class KeyUtil {
             throw new IllegalArgumentException("Only 7 character keys can become Integers");
         }
         var offset = toBigInteger(input, 10);
-        var max = BigInteger.valueOf(Integer.MAX_VALUE);
-        var value = offset.subtract(max);
+        var max = BigInteger.valueOf(Integer.MIN_VALUE);
+        var value = offset.add(max);
         try {
             return value.intValueExact();
         } catch (ArithmeticException e) {
@@ -66,9 +71,9 @@ public class KeyUtil {
         if (input == null) {
             return null;
         }
-        BigInteger offset = BigInteger.valueOf(input).add(BigInteger.valueOf(Long.MAX_VALUE));
-        // This gives us a maximum value of 2^64 which is smaller than 13^34
-        return toString(offset, 20, 13);
+        BigInteger offset = BigInteger.valueOf(input).subtract(BigInteger.valueOf(Long.MIN_VALUE));
+        // This gives us a maximum value of 2^64 which is smaller than 14^34
+        return toString(offset, 20, 14);
     }
 
     public static Long toLong(String input) {
@@ -76,11 +81,11 @@ public class KeyUtil {
             return null;
         }
         input = normalizeBase34(input);
-        if (input.length() != 13) {
-            throw new IllegalArgumentException("Only 13 character keys can become Longs");
+        if (input.length() != 14) {
+            throw new IllegalArgumentException("Only 14 character keys can become Longs");
         }
         try {
-            return toBigInteger(input, 20).subtract(BigInteger.valueOf(Long.MAX_VALUE)).longValueExact();
+            return toBigInteger(input, 20).add(BigInteger.valueOf(Long.MIN_VALUE)).longValueExact();
         } catch (ArithmeticException e) {
             throw new IllegalArgumentException("Invalid Key");
         }
