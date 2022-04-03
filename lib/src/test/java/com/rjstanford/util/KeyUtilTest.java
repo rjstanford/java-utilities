@@ -10,24 +10,28 @@ public class KeyUtilTest {
 
 
     @Test public void testLong() {
-        assertEquals("XUY38TKDFDOI6", KeyUtil.toString(1L));
-        assertEquals(1, (long) KeyUtil.toLong("XUY38TKDFDOI6"));
-        assertEquals("ZMD5GTHUJT7NY", KeyUtil.toString(123L));
-        assertEquals(123, (long) KeyUtil.toLong("ZMD5GTHUJT7NY"));
+        checkLong(1,"XUY38TKDFDOI6");
+        checkLong(123,"ZMD5GTHUJT7NY");
+        checkLong(Long.MAX_VALUE,"HEUUNQE9G8BCT");
+        checkLong(Long.MIN_VALUE + 2,"46G2IB24MQYHE");
+        assertThrows(IllegalArgumentException.class, () -> KeyUtil.toString(Long.MIN_VALUE));
     }
 
+
     @Test public void testInt() {
-        assertEquals("5G9L5AK", KeyUtil.toString(1));
-        assertEquals(1, (int) KeyUtil.toInteger("5G9L5AK"));
-        assertEquals("YHZ2Q6Y", KeyUtil.toString(123));
-        assertEquals(123, (int) KeyUtil.toInteger("YHZ2Q6Y"));
+        checkInt(1, "5G9L5AK");
+        checkInt(123, "YHZ2Q6Y");
+        checkInt(Integer.MAX_VALUE,"36FFTTM");
+        checkInt(Integer.MIN_VALUE + 2,"YMYANUO");
+        assertThrows(IllegalArgumentException.class, () -> KeyUtil.toString(Integer.MIN_VALUE));
     }
 
     @Test public void testShort() {
-        assertEquals("27YN", KeyUtil.toString((short)1));
-        assertEquals(1, (int) KeyUtil.toShort("27YN"));
-        assertEquals("Y8GV", KeyUtil.toString((short)123));
-        assertEquals(123, (short) KeyUtil.toShort("Y8GV"));
+        checkShort((short)1, "27YN");
+        checkShort((short)123, "Y8GV");
+        checkShort(Short.MAX_VALUE,"Z3N2");
+        checkShort((short)(Short.MIN_VALUE + 2),"Y8M4");
+        assertThrows(IllegalArgumentException.class, () -> KeyUtil.toString(Short.MIN_VALUE));
     }
 
     @Test public void testCleanup() {
@@ -38,5 +42,19 @@ public class KeyUtilTest {
         assertEquals(1, (long) KeyUtil.toLong("XUY38TKDFD016"));
     }
 
+    void checkLong(long number, String string) {
+        assertEquals(string, KeyUtil.toString(number));
+        assertEquals(number, KeyUtil.toLong(string).longValue());
+    }
+
+    void checkShort(short number, String string) {
+        assertEquals(string, KeyUtil.toString(number));
+        assertEquals(number, KeyUtil.toShort(string).shortValue());
+    }
+
+    void checkInt(int number, String string) {
+        assertEquals(string, KeyUtil.toString(number));
+        assertEquals(number, KeyUtil.toInteger(string).intValue());
+    }
 
 }

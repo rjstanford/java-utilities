@@ -11,11 +11,19 @@ import java.util.Optional;
  */
 public class KeyUtil {
 
+    /**
+     * Convert a
+     * @param input
+     * @return
+     */
     public static String toString(Short input) {
         if (input == null) {
             return null;
         }
         var offset = BigInteger.valueOf(input).add(BigInteger.valueOf(Short.MAX_VALUE));
+        if (offset.signum() < 1) {
+            throw new IllegalArgumentException("Value is too low for a Short string");
+        }
         // This gives us a maximum value of 2^16 which is smaller than 4^34
         return toString(offset, 5, 4);
     }
@@ -40,6 +48,9 @@ public class KeyUtil {
             return null;
         }
         var offset = BigInteger.valueOf(input).add(BigInteger.valueOf(Integer.MAX_VALUE));
+        if (offset.signum() < 1) {
+            throw new IllegalArgumentException("Value is too low for an Integer string");
+        }
         // This gives us a maximum value of 2^32 which is smaller than 7^34
         return toString(offset, 10, 7);
     }
@@ -68,6 +79,9 @@ public class KeyUtil {
         }
         BigInteger offset = BigInteger.valueOf(input).add(BigInteger.valueOf(Long.MAX_VALUE));
         // This gives us a maximum value of 2^64 which is smaller than 13^34
+        if (offset.signum() < 1) {
+            throw new IllegalArgumentException("Value is too low for a Long string");
+        }
         return toString(offset, 20, 13);
     }
 
