@@ -39,13 +39,13 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Test
-      if: steps.tag_version.outputs.new_tag != steps.tag_version.outputs.previous_tag
+      if: steps.tag_version.outputs.new_tag
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: test
 
     - name: Create a GitHub release
-      if: steps.tag_version.outputs.new_tag != steps.tag_version.outputs.previous_tag
+      if: steps.tag_version.outputs.new_tag
       uses: ncipollo/release-action@v1
       with:
         tag: ${{ steps.tag_version.outputs.new_tag }}
@@ -53,7 +53,7 @@ jobs:
         body: ${{ steps.tag_version.outputs.changelog }}
 
     - name: Publish to GitHub Packages
-      if: steps.tag_version.outputs.new_tag != steps.tag_version.outputs.previous_tag
+      if: steps.tag_version.outputs.new_tag
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
         arguments: publish -Pversion=${{ steps.tag_version.outputs.new_version }}
