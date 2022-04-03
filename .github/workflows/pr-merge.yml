@@ -20,19 +20,16 @@ jobs:
 
     steps:
 
-    - run: echo Event is ${{ github.event }}
-    - run: echo PR Target is ${{ github.event.pull_request_target }}
-    - run: echo Merged status is ${{ github.event.pull_request_target.merged }}
-
-    - uses: actions/checkout@v3
+    - name: Check out code
+      uses: actions/checkout@v3
 
     - name: Set up JDK
       uses: actions/setup-java@v3
       with:
         java-version: '17'
         distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
+        server-id: github
+        settings-path: ${{ github.workspace }}
 
     - name: Create Tag
       id: tag_version
