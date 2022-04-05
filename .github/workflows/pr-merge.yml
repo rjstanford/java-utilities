@@ -7,6 +7,6 @@ on:
 
 jobs:
   Deploy:
-    name: Library Deploy
+    name: Deploy Library
     if: github.event.pull_request.merged
     uses: rjstanford/github/.github/workflows/gradle-library-deploy.yml@main
