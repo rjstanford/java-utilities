@@ -8,6 +8,10 @@ on:
       - edited
       - synchronize
 
+concurrency:
+  group: java-utilities-test
+  cancel-in-progress: true
+
 jobs:
   Test:
     name: Unit Test
