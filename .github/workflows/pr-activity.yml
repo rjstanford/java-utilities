@@ -9,15 +9,15 @@ on:
       - synchronize
 
 concurrency:
-  group: java-utilities-test
+  group: java-utilities-pr-activity
   cancel-in-progress: true
 
 jobs:
 
   Name:
-    name: Commit Message Validation
+    name: Validate PR Title
     uses: rjstanford/github/.github/workflows/validate-pr-title.yml@main
 
   Test:
-    name: Unit Test
+    name: Run Unit Tests
     uses: rjstanford/github/.github/workflows/gradle-test.yml@main
