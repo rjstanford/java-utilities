@@ -13,4 +13,7 @@ but are in fact predictable.
 ## Deployment Notes
 
 Deploying with a fix: or feat: tag should trigger an automated 
-package release and upload
+package release and upload.  Adding the phrase BREAKING CHANGE
+in a commit body should trigger a major version bump, otherwise
+a feat: gets minor and a fix: fix.  Use chore: or similar for no
+release required.
