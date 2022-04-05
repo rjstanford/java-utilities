@@ -1,4 +1,4 @@
-name: Unit Test
+name: Pull Request Activity
 
 on:
   pull_request:
@@ -9,5 +9,5 @@ on:
       - synchronize
 
 jobs:
-  Test:
-    uses: rjstanford/actions/.github/workflows/gradle-test.yml@main
+  Unit-Test:
+    uses: rjstanford/github/.github/workflows/gradle-test.yml@main
