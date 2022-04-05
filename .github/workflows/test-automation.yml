@@ -1,4 +1,4 @@
-name: Test
+name: Unit Test
 
 on:
   pull_request:
@@ -9,25 +9,5 @@ on:
       - synchronize
 
 jobs:
-
   Test:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - name: Check out code
-      uses: actions/checkout@v3
-
-    - name: Set up Java
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        server-id: github
-        settings-path: ${{ github.workspace }}
-
-    - name: Test
-      uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
-      with:
-        arguments: test
+    uses: rjstanford/actions/gradle-test.yml
