@@ -10,4 +10,4 @@ on:
 
 jobs:
   Test:
-    uses: rjstanford/actions/gradle-test.yml
+    uses: rjstanford/actions/.github/workflows/gradle-test.yml@main
