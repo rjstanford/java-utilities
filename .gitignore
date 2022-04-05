@@ -30,3 +30,6 @@ build
 
 # Ignore IntelliJ IDEA
 /.idea/
+
+# Ignore vi swap files
+*.swp
