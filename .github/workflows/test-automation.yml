@@ -16,7 +16,7 @@ jobs:
 
   Name:
     name: Commit Message Validation
-    uses: rjstanford/github/.github/workflows/conventional-commit-title.yml@main
+    uses: rjstanford/github/.github/workflows/validate-pr-title.yml@main
 
   Test:
     name: Unit Test
