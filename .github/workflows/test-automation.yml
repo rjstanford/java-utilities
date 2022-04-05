@@ -13,6 +13,11 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+
+  Name:
+    name: Commit Message Validation
+    uses: rjstanford/github/.github/workflows/validate-pr-title.yml@main
+
   Test:
     name: Unit Test
     uses: rjstanford/github/.github/workflows/gradle-test.yml@main
