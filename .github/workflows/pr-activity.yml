@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
 
-  Name:
+  Title:
     name: Validate PR Title
     uses: rjstanford/github/.github/workflows/validate-pr-title.yml@main
 
