@@ -7,6 +7,7 @@ on:
       - reopened
       - edited
       - synchronize
+      - closed
 
 concurrency:
   group: java-utilities-pr-activity
@@ -21,3 +22,8 @@ jobs:
   Test:
     name: Run Unit Tests
     uses: rjstanford/github/.github/workflows/gradle-test.yml@main
+
+  Deploy:
+    name: Deploy Library
+    if: github.event.pull_request.merged
+    uses: rjstanford/github/.github/workflows/gradle-library-deploy.yml@main
