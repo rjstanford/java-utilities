@@ -1,12 +1,7 @@
 name: Pull Request Activity
 
 on:
-  pull_request:
-    types:
-      - opened
-      - reopened
-      - edited
-      - synchronize
+  pull_request
 
 concurrency:
   group: java-utilities-pr-activity
@@ -16,8 +11,15 @@ jobs:
 
   Name:
     name: Validate PR Title
+    if: github.event.action == "opened" || github.event.action == "reopened", || github.event.action == "edited", || github.event.action == "synchronize"
     uses: rjstanford/github/.github/workflows/validate-pr-title.yml@main
 
   Test:
     name: Run Unit Tests
+    if: github.event.action == "opened" || github.event.action == "reopened", || github.event.action == "edited", || github.event.action == "synchronize"
     uses: rjstanford/github/.github/workflows/gradle-test.yml@main
+
+  Deploy:
+    name: Deploy Library
+    if: github.event.pull_request.merged
+    uses: rjstanford/github/.github/workflows/gradle-library-deploy.yml@main
