@@ -1,7 +1,7 @@
 name: Pull Request Activity
 
 on:
-  pull_request
+  pull_request:
     types: [ opened, reopened, synchronize, edited, closed ]
 
 
