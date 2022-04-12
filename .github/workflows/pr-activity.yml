@@ -13,15 +13,15 @@ jobs:
 
   Name:
     name: Validate PR Title
-    if: github.event.action == "opened" || github.event.action == "reopened" || github.event.action == "edited" || github.event.action == "synchronize"
+    if: github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'edited' || github.event.action == 'synchronize'
     uses: rjstanford/github/.github/workflows/validate-pr-title.yml@main
 
   Test:
     name: Run Unit Tests
-    if: github.event.action == "opened" || github.event.action == "reopened" || github.event.action == "synchronize"
+    if: github.event.action == 'opened' || github.event.action == 'reopened' || github.event.action == 'edited' || github.event.action == 'synchronize'
     uses: rjstanford/github/.github/workflows/gradle-test.yml@main
 
   Deploy:
     name: Deploy Library
-    if: github.event.action == "closed" && github.event.pull_request.merged
+    if: github.event.action == 'closed' && github.event.pull_request.merged
     uses: rjstanford/github/.github/workflows/gradle-library-deploy.yml@main
