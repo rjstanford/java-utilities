@@ -3,7 +3,7 @@
 A self-publishing Java library of utilities
 
 
-## KeyUtil
+## RecordLocatorUtil
 
 Convert a short, int, or long into a reversible string representation
 that's hard to predict but very quickly converted back to a number;
