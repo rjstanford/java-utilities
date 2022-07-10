@@ -1,15 +1,13 @@
 package com.rjstanford.util;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.Optional;
 
 /**
  *  Reliably and efficiently convert a number into a rapidly changing, bidirectional string representation
  *  The strings use base 34, which is case insensitive and where i/1 and 0/o are the same
  *  Furthermore, output strings are mapped 0 -> Y and 1 -> Z to reduce confusion
  */
-public class KeyUtil {
+public class RecordLocatorUtil {
 
     /**
      * Convert a
@@ -31,12 +29,12 @@ public class KeyUtil {
         }
         input = normalizeBase34(input);
         if (input.length() != 4) {
-            throw new IllegalArgumentException("Only 4 character keys can become Shorts");
+            throw new IllegalArgumentException("Only 4 character locators can become Shorts");
         }
         try {
             return toBigInteger(input, 5).add(BigInteger.valueOf(Short.MIN_VALUE)).shortValueExact();
         } catch (ArithmeticException e) {
-            throw new IllegalArgumentException("Invalid Key");
+            throw new IllegalArgumentException("Invalid Locator");
         }
     }
 
@@ -55,7 +53,7 @@ public class KeyUtil {
         }
         input = normalizeBase34(input);
         if (input.length() != 7) {
-            throw new IllegalArgumentException("Only 7 character keys can become Integers");
+            throw new IllegalArgumentException("Only 7 character locators can become Integers");
         }
         var offset = toBigInteger(input, 10);
         var max = BigInteger.valueOf(Integer.MIN_VALUE);
@@ -63,7 +61,7 @@ public class KeyUtil {
         try {
             return value.intValueExact();
         } catch (ArithmeticException e) {
-            throw new IllegalArgumentException("Invalid Key");
+            throw new IllegalArgumentException("Invalid Locator");
         }
     }
 
@@ -82,12 +80,12 @@ public class KeyUtil {
         }
         input = normalizeBase34(input);
         if (input.length() != 14) {
-            throw new IllegalArgumentException("Only 14 character keys can become Longs");
+            throw new IllegalArgumentException("Only 14 character locators can become Longs");
         }
         try {
             return toBigInteger(input, 20).add(BigInteger.valueOf(Long.MIN_VALUE)).longValueExact();
         } catch (ArithmeticException e) {
-            throw new IllegalArgumentException("Invalid Key");
+            throw new IllegalArgumentException("Invalid Locator");
         }
 
     }
@@ -102,7 +100,7 @@ public class KeyUtil {
     private static String toString(BigInteger input, int inputLength, int outputLength) {
         var padded = leftPad(String.valueOf(input), inputLength);
         var reversed = new BigInteger(new StringBuilder(padded).reverse().toString());
-        return KeyUtil.toBase34(reversed, outputLength);
+        return RecordLocatorUtil.toBase34(reversed, outputLength);
     }
 
     private static String leftPad(String input, int length) {

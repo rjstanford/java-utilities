@@ -3,7 +3,7 @@ package com.rjstanford.util;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class KeyUtilTest {
+public class RecordLocatorUtilTest {
 
 
     @Test public void testLong() {
@@ -31,26 +31,26 @@ public class KeyUtilTest {
     }
 
     @Test public void testCleanup() {
-        assertEquals(122, (int) KeyUtil.toInteger("YHZ2Q6Y"));
-        assertEquals(122, (int) KeyUtil.toInteger("YH-Z2-Q6-Y"));
-        assertEquals(122, (int) KeyUtil.toInteger("yh-Z2-Q6-Y"));
-        assertEquals(24601L, (long) KeyUtil.toLong("Z3TWSOKHPPFZ2I"));
-        assertEquals(24601L, (long) KeyUtil.toLong("Z3TWS0KHPPFZ21"));
+        assertEquals(122, (int) RecordLocatorUtil.toInteger("YHZ2Q6Y"));
+        assertEquals(122, (int) RecordLocatorUtil.toInteger("YH-Z2-Q6-Y"));
+        assertEquals(122, (int) RecordLocatorUtil.toInteger("yh-Z2-Q6-Y"));
+        assertEquals(24601L, (long) RecordLocatorUtil.toLong("Z3TWSOKHPPFZ2I"));
+        assertEquals(24601L, (long) RecordLocatorUtil.toLong("Z3TWS0KHPPFZ21"));
     }
 
     void checkLong(long number, String string) {
-        assertEquals(string, KeyUtil.toString(number));
-        assertEquals(number, KeyUtil.toLong(string).longValue());
+        assertEquals(string, RecordLocatorUtil.toString(number));
+        assertEquals(number, RecordLocatorUtil.toLong(string).longValue());
     }
 
     void checkShort(short number, String string) {
-        assertEquals(string, KeyUtil.toString(number));
-        assertEquals(number, KeyUtil.toShort(string).shortValue());
+        assertEquals(string, RecordLocatorUtil.toString(number));
+        assertEquals(number, RecordLocatorUtil.toShort(string).shortValue());
     }
 
     void checkInt(int number, String string) {
-        assertEquals(string, KeyUtil.toString(number));
-        assertEquals(number, KeyUtil.toInteger(string).intValue());
+        assertEquals(string, RecordLocatorUtil.toString(number));
+        assertEquals(number, RecordLocatorUtil.toInteger(string).intValue());
     }
 
 }
